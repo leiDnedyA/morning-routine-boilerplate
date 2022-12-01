@@ -1,4 +1,5 @@
-import SiteScraper from './background_modules/SiteScraper'
+import SiteScraper from './scripts/background_modules/SiteScraper.js'
+import {tabIsOpen} from './scripts/background_modules/tabFunctions.js';
 
 chrome.runtime.onInstalled.addListener(() => {
     console.log('<3')
@@ -26,17 +27,19 @@ const main = async () => {
         })
     ]
 
-    return new Promise((res, rej) => {
-    
-        //open spreadsheet
+    let isOpen = await tabIsOpen(spreadSheetURL)
+
+    console.log(isOpen)
+
+    if(!isOpen){
         chrome.tabs.create(
             {active: false,
                 index: 0,
                 pinned: true,
                 url: spreadSheetURL}
         );
+    }
 
-        res({message: 'success'})
-    })
+    return {message: 'success'}
 
 }

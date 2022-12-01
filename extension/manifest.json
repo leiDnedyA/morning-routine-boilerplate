@@ -3,6 +3,7 @@
     "name": "Morning Routine Boilerplate",
     "description": "Goes through and does all my morning routine tasks for me",
     "version": "1.0",
+    "minimum_chrome_version": "93",
     "action": {
       "default_popup": "index.html",
       "default_icon": "icon.png"
@@ -14,11 +15,12 @@
         }
     ],
     "background": {
-        "service_worker": "scripts/background.js",
+        "service_worker": "background.js",
         "type": "module"
     },
     "permissions": [
         "tabs",
-        "activeTab"
+        "activeTab",
+        "background"
     ]
 }
