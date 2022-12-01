@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Morning Routine Boilerplate",
+    "name": "Morning Routine Automater",
     "description": "Goes through and does all my morning routine tasks for me",
     "version": "1.0",
     "minimum_chrome_version": "93",

@@ -1,6 +1,53 @@
 <html>
+    <head>
+        <style>
+            body{
+                min-width: 400px; /* your desired width */
+                max-width: 100%;
+                margin: 0;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            
+            .messageContainer {
+                border: solid 1px black;
+                padding: 3px;
+                color: #444;
+            }
+
+            #startButton {
+                margin-top: 10px;
+                background-color: rgb(200, 50, 50);
+                color: white;
+                border-radius: 10px;
+                border: none;
+                font-size: large;
+                font-weight: bold;
+                padding: 30px;
+                width: fit-content;
+            }
+
+            #startButton:disabled {
+                background-color: rgb(200, 100, 100);
+            }
+
+            #startButton:hover {
+                background-color: rgb(255, 50, 50);
+            }
+
+            #startButton:active {
+                background-color: rgb(100, 0, 0);
+            }
+
+        </style>
+    </head>
     <body>
-        <h1>Hello world</h1>
+        <h1>Morning Routine Automator</h1>
+        <div class="messageContainer">
+            <p id="messageText">Not yet started...</p>
+        </div>
         <button id="startButton">Start</button>
         <script src="./src/main.js"></script>
     </body>
