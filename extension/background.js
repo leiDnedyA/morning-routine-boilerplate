@@ -1,5 +1,5 @@
 import SiteScraper from './scripts/background_modules/SiteScraper.js'
-import {tabIsOpen} from './scripts/background_modules/tabFunctions.js';
+import {tabIsOpen, openTab, getTabByUrl} from './scripts/background_modules/tabFunctions.js';
 
 const sendUpdateMessage = (msg, finished = false) => {
     chrome.runtime.sendMessage({
@@ -7,7 +7,7 @@ const sendUpdateMessage = (msg, finished = false) => {
         message: msg,
         finished: finished
     });
-}
+};
 
 chrome.runtime.onInstalled.addListener(() => {
     console.log('<3')
@@ -40,18 +40,18 @@ const main = async () => {
         })
     ]
 
-    let isOpen = await tabIsOpen(spreadSheetURL)
+    // TODO: create a class or object that handles spreadsheet with methods to update values
+    
+    let sheetTab = null;
 
-    console.log(isOpen)
-
-    if(!isOpen){
-        await chrome.tabs.create(
-            {active: false,
-                index: 0,
-                pinned: true,
-                url: spreadSheetURL}
-        );
+    if(!await tabIsOpen(spreadSheetURL)){
+        sheetTab = await openTab(spreadSheetURL);
+    }else{
+        sheetTab = getTabByUrl(spreadSheetURL);
     }
+
+    // TODO: create modules for individual site scripts, run them here
+
 
     const executionTime = (Date.now() - startTime) / 1000; //in seconds
 

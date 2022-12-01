@@ -1,20 +1,36 @@
 
-const tabIsOpen = (url) => {
+const tabIsOpen = async (url) => {
 
+    const tab = await getTabByUrl(url);
+
+    return tab != null
+
+}
+
+// Opens a new tab, resolves with resulting tab
+const openTab = async (url, active = false, pinned = false) => {
+
+    const tab = await chrome.tabs.create({
+        url: url,
+        active: active,
+        pinned: pinned
+    });
+
+    return tab;
+}
+
+const getTabByUrl = async (url) => {
     return new Promise((res, rej) => {
         chrome.tabs.query({}, (tabs)=>{
             for(let i in tabs){
                 let tab = tabs[i];
-                console.log(tab.url.toLowerCase());
-                console.log(url.toLowerCase());
-                console.log(tab.url.toLowerCase().includes(url.toLowerCase()))
                 if (tab.url.toLowerCase().includes(url.toLowerCase())){
-                    res(true);
+                    res(tab);
                 }
             }
-            res(false);
+            res(null);
         })
-    });
+    })
 }
 
-export {tabIsOpen}
+export {tabIsOpen, openTab, getTabByUrl}

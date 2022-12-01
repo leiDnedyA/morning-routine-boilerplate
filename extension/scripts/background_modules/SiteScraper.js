@@ -3,7 +3,11 @@ class SiteScraper{
     //callback should be async and take the parameter URL
     constructor(url, callback){
         this.url = url;
-        // this.callback = callback;
+        this.callback = callback;
+    }
+
+    async openTab(){
+        chrome.tabs.open()
     }
 
     //returns the value of an element from a dom query
