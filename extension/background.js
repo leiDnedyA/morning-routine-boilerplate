@@ -1,4 +1,4 @@
-import SiteScraper from './scripts/background_modules/SiteScraper.js'
+import scrapeSite from './scripts/background_modules/scrapeSite.js'
 import {tabIsOpen, openTab, getTabByUrl} from './scripts/background_modules/tabFunctions.js';
 
 const sendUpdateMessage = (msg, finished = false) => {
@@ -32,12 +32,18 @@ const main = async () => {
 
     const startTime = Date.now();
 
-    const spreadSheetURL = 'https://docs.google.com/spreadsheets/d/1C7BUsezoUFqRsp2SzK7I7XorhBda2_fmpiEeeB9Mmt8/edit#gid=0';
-    const otherSites = [
-        new SiteScraper('https://beaconcard.umb.edu/login.php',
-        async () =>{
-            
-        })
+    const spreadSheetURL = 'https://docs.google.com/spreadsheets/d/1W2Y1LJHbjme5p9T4hSrdX7pVR3Pb8k2ylO6wqgT4MLc/edit#gid=0';
+    const scrapeSequences = [
+        {
+            sequence: {
+                startURL: 'https://beaconcard.umb.edu/login.php',
+                urlActions: {},
+                finalURL: 'beaconcard.umb.edu/index.php',
+                finalQuery: '.jsa_amount.pos',
+                finalQueryIndex: 1
+            },
+            sheetCell: 'a1'
+        }
     ]
 
     // TODO: create a class or object that handles spreadsheet with methods to update values
@@ -51,7 +57,13 @@ const main = async () => {
     }
 
     // TODO: create modules for individual site scripts, run them here
-
+    for(let i in scrapeSequences){
+        let seq = scrapeSequences[i];
+        // val is the scraped value from the site
+        let val = await scrapeSite(seq.sequence);
+        // TODO: set sheet cell at seq.sheetCell to val
+        console.log(val);
+    }
 
     const executionTime = (Date.now() - startTime) / 1000; //in seconds
 
