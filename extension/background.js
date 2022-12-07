@@ -53,7 +53,7 @@ const main = async () => {
     if(!await tabIsOpen(spreadSheetURL)){
         sheetTab = await openTab(spreadSheetURL);
     }else{
-        sheetTab = getTabByUrl(spreadSheetURL);
+        sheetTab = await getTabByUrl(spreadSheetURL);
     }
 
     // TODO: create modules for individual site scripts, run them here

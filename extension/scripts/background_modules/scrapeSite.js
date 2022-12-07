@@ -20,14 +20,18 @@ async function scrapeSite(scrapeSequence){
 
     return new Promise((res, rej)=>{
         
-        const listener = (tabId, changeInfo, updatedTab)=>{
-            if (tabId == tab.id && updatedTab.url.includes(scrapeSequence.finalURL)){
+        const listener = (tabId, info, updatedTab)=>{
+            if (tabId == tab.id && info.status == 'complete' && updatedTab.url.includes(scrapeSequence.finalURL)){
                 // TODO: get dom element based on finalQuery
-                chrome.tabs.sendMessage(tab.id, {msgType: 'domQuery', query: scrapeSequence.finalQuery},
-                (domContent)=>{
-                    chrome.tabs.onUpdated.removeListener(listener);
-                    res(domContent)
-                })
+                setTimeout(()=>{
+                    chrome.tabs.sendMessage(
+                        tabId,
+                        {msgType: 'domQuery', query: scrapeSequence.finalQuery, queryIndex: scrapeSequence.finalQueryIndex},
+                        (domContent)=>{
+                            chrome.tabs.onUpdated.removeListener(listener);
+                            res(domContent);
+                        })
+                }, 1000);
             }
         };
         
