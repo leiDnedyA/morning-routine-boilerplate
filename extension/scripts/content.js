@@ -15,9 +15,17 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse)=>{
         }else{
             queryResp = queryResp[0];
         }
-        
-        console.log(queryResp.textContent);
-        sendResponse(queryResp.textContent);
+
+        let respText = queryResp.textContent;
+
+        if(msg.hasOwnProperty('regex')){
+            console.log(msg.regex)
+            const re = new RegExp(msg.regex);
+            respText = re.exec(respText)[0];
+        }
+
+        console.log(respText);
+        sendResponse(respText);
     }
 
 })

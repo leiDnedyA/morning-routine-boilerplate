@@ -40,7 +40,8 @@ const main = async () => {
                 urlActions: {},
                 finalURL: 'beaconcard.umb.edu/index.php',
                 finalQuery: '.jsa_amount.pos',
-                finalQueryIndex: 1
+                finalQueryIndex: 1,
+                regex: '\\d+\.\\d+'
             },
             sheetCell: 'a1'
         }
@@ -58,11 +59,14 @@ const main = async () => {
 
     // TODO: create modules for individual site scripts, run them here
     for(let i in scrapeSequences){
-        let seq = scrapeSequences[i];
+        const seq = scrapeSequences[i];
         // val is the scraped value from the site
-        let val = await scrapeSite(seq.sequence);
+        const strVal = await scrapeSite(seq.sequence);
         // TODO: set sheet cell at seq.sheetCell to val
-        console.log(val);
+        let val = 0;
+        if(!isNaN(strVal)){
+            val = parseFloat(strVal);
+        }
     }
 
     const executionTime = (Date.now() - startTime) / 1000; //in seconds

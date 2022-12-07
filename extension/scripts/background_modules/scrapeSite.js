@@ -26,7 +26,7 @@ async function scrapeSite(scrapeSequence){
                 setTimeout(()=>{
                     chrome.tabs.sendMessage(
                         tabId,
-                        {msgType: 'domQuery', query: scrapeSequence.finalQuery, queryIndex: scrapeSequence.finalQueryIndex},
+                        {msgType: 'domQuery', query: scrapeSequence.finalQuery, queryIndex: scrapeSequence.finalQueryIndex, regex: scrapeSequence.regex},
                         (domContent)=>{
                             chrome.tabs.onUpdated.removeListener(listener);
                             res(domContent);
