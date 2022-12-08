@@ -18,9 +18,14 @@
         "service_worker": "background.js",
         "type": "module"
     },
+    "oauth2": {
+        "client_id": "284555746591-0e555ng845tk3mq8dn613r1pua0hem8i.apps.googleusercontent.com",
+        "scopes": ["https://www.googleapis.com/auth/userinfo.email"]
+    },
     "permissions": [
         "tabs",
         "activeTab",
-        "background"
+        "background",
+        "identity"
     ]
 }

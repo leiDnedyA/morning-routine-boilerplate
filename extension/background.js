@@ -1,5 +1,6 @@
 import scrapeSite from './scripts/background_modules/scrapeSite.js'
 import {tabIsOpen, openTab, getTabByUrl} from './scripts/background_modules/tabFunctions.js';
+import { editGoogleSheet } from './scripts/background_modules/sheetFunctions.js';
 
 const sendUpdateMessage = (msg, finished = false) => {
     chrome.runtime.sendMessage({
@@ -67,6 +68,7 @@ const main = async () => {
         if(!isNaN(strVal)){
             val = parseFloat(strVal);
         }
+        console.log(val);
     }
 
     const executionTime = (Date.now() - startTime) / 1000; //in seconds
@@ -74,3 +76,14 @@ const main = async () => {
     return {successful: true, userMessage: `Script completed in ${executionTime} seconds.`}
 
 }
+
+
+//testing oauth
+
+
+chrome.runtime.onInstalled.addListener(()=>{
+    console.log('hi')
+    chrome.identity.getAuthToken({ interactive: true }, function (token) {
+        console.log(token);
+    });
+})
